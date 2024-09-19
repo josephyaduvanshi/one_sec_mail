@@ -1,39 +1,239 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# OneSecMail Dart Package
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A Dart package that provides a convenient wrapper around the [1secmail.com](https://www.1secmail.com/api/) API. This package allows you to generate temporary email addresses, check mailboxes, read messages, and download attachments effortlessly.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+## Table of Contents
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Import the Package](#import-the-package)
+  - [Generating Random Email Addresses](#generating-random-email-addresses)
+  - [Retrieving Active Domains](#retrieving-active-domains)
+  - [Checking Mailbox](#checking-mailbox)
+  - [Fetching Single Message](#fetching-single-message)
+  - [Downloading Attachments](#downloading-attachments)
+- [API Reference](#api-reference)
+  - [OneSecMail Class](#onesecmail-class)
+    - [Methods](#methods)
+- [Models](#models)
+  - [Message Class](#message-class)
+  - [MessageDetails Class](#messagedetails-class)
+  - [Attachment Class](#attachment-class)
+- [Best Practices](#best-practices)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Generate Random Email Addresses**: Quickly generate one or multiple random email addresses using the available domains.
+- **Retrieve Active Domains**: Fetch the list of currently active domains that can be used for email addresses.
+- **Check Mailbox**: Retrieve a list of messages in a specific mailbox.
+- **Fetch Single Message**: Read the details of a single message, including its body and attachments.
+- **Download Attachments**: Download attachments from messages directly to your local storage.
 
-## Getting started
+## Installation
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add the following to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  one_sec_mail: ^1.0.0
+```
+
+Then run:
+
+```bash
+flutter pub get
+```
+
+Or for a Dart project:
+
+```bash
+dart pub get
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Here's how to use the package:
+
+### Import the Package
 
 ```dart
-const like = 'sample';
+import 'package:one_sec_mail/one_sec_mail.dart';
 ```
 
-## Additional information
+### Generating Random Email Addresses
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+void main() async {
+  final mailClient = OneSecMail();
+
+  // Generate random email addresses
+  List<String> emails = await mailClient.generateRandomEmails(count: 5);
+  print('Generated Emails: $emails');
+}
+```
+
+### Retrieving Active Domains
+
+```dart
+// Get list of active domains
+List<String> domains = await mailClient.getDomainList();
+print('Active Domains: $domains');
+```
+
+### Checking Mailbox
+
+```dart
+// Use the first generated email for further actions
+String email = emails.first;
+String login = email.split('@')[0];
+String domain = email.split('@')[1];
+
+// Check mailbox
+List<Message> messages = await mailClient.getMessages(login: login, domain: domain);
+print('Messages: $messages');
+```
+
+### Fetching Single Message
+
+```dart
+if (messages.isNotEmpty) {
+  // Read a message
+  int messageId = messages.first.id;
+  MessageDetails messageDetails = await mailClient.readMessage(
+    login: login,
+    domain: domain,
+    id: messageId,
+  );
+  print('Message Details: $messageDetails');
+}
+```
+
+### Downloading Attachments
+
+```dart
+if (messageDetails.attachments.isNotEmpty) {
+  Attachment attachment = messageDetails.attachments.first;
+  await mailClient.downloadAttachment(
+    login: login,
+    domain: domain,
+    id: messageId,
+    filename: attachment.filename,
+    savePath: '/path/to/save', 
+  );
+  print('Attachment downloaded: ${attachment.filename}');
+}
+```
+
+## API Reference
+
+### OneSecMail Class
+
+#### Methods
+
+- `generateRandomEmails({int count = 1})`
+
+  Generates random email addresses.
+
+  Parameters:
+  - `count`: Number of email addresses to generate (default is 1).
+  
+  Returns: `Future<List<String>>`
+
+- `getDomainList()`
+
+  Retrieves a list of active domains.
+
+  Returns: `Future<List<String>>`
+
+- `getMessages({required String login, required String domain})`
+
+  Retrieves messages from the specified mailbox.
+
+  Parameters:
+  - `login`: The username part of the email address.
+  - `domain`: The domain part of the email address.
+  
+  Returns: `Future<List<Message>>`
+
+- `readMessage({required String login, required String domain, required int id})`
+
+  Fetches details of a single message.
+
+  Parameters:
+  - `login`: The username part of the email address.
+  - `domain`: The domain part of the email address.
+  - `id`: The message ID.
+  
+  Returns: `Future<MessageDetails>`
+
+- `downloadAttachment({required String login, required String domain, required int id, required String filename, required String savePath})`
+
+  Downloads an attachment from a message.
+
+  Parameters:
+  - `login`: The username part of the email address.
+  - `domain`: The domain part of the email address.
+  - `id`: The message ID.
+  - `filename`: The name of the attachment file.
+  - `savePath`: The local directory path where the file will be saved.
+  
+  Returns: `Future<void>`
+
+## Models
+
+### Message Class
+
+Represents a message in the mailbox.
+
+Fields:
+
+- `id` (int): Message ID.
+- `from` (String): Sender's email address.
+- `subject` (String): Subject of the email.
+- `date` (String): Receive date of the email.
+
+### MessageDetails Class
+
+Represents detailed information about a message.
+
+Fields:
+
+- `id` (int): Message ID.
+- `from` (String): Sender's email address.
+- `subject` (String): Subject of the email.
+- `date` (String): Receive date of the email.
+- `attachments` (List<Attachment>): List of attachments.
+- `body` (String): Message body (HTML if exists, text otherwise).
+- `textBody` (String): Message body in plain text.
+- `htmlBody` (String): Message body in HTML.
+
+### Attachment Class
+
+Represents an attachment in a message.
+
+Fields:
+
+- `filename` (String): Name of the attachment file.
+- `contentType` (String): MIME type of the attachment.
+- `size` (int): Size of the attachment in bytes.
+
+## Best Practices
+
+1. **Null Safety**: The package is written with null safety in mind. Ensure your project is using a Dart SDK version that supports null safety.
+2. **Exception Handling**: Wrap API calls in try-catch blocks to gracefully handle exceptions and API errors.
+3. **Async/Await**: Use async/await syntax to handle asynchronous operations cleanly.
+4. **Resource Management**: Clean up any temporary files or data after usage, especially when downloading attachments.
+5. **Permissions**: Ensure your application has the necessary permissions to write to the specified directories when downloading attachments.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request on the GitHub repository to contribute to this project.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE() file for details.
+
+Disclaimer: Use this package responsibly and adhere to the terms and conditions of 1secmail.com. Temporary email services should not be used for malicious activities.

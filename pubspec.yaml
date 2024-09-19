@@ -1,7 +1,8 @@
 name: one_sec_mail
-description: "A new Flutter package project."
+description: A Dart package that provides a convenient wrapper around the [1secmail.com](https://www.1secmail.com/api/) API. This package allows you to generate temporary email addresses, check mailboxes, read messages, and download attachments effortlessly.
 version: 0.0.1
-homepage:
+homepage: https://github.com/josephyaduvanshi/one_sec_mail
+repository: https://github.com/josephyaduvanshi/one_sec_mail
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -21,8 +22,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
-
+flutter: {}
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
