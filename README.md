@@ -1,3 +1,28 @@
+<p align="center">
+  <a href="https://github.com/josephyaduvanshi" target="_blank">
+    <img src="https://i.imgur.com/OQ4VMmS.png"  width="1200" alt="OneSecMail">
+  </a>
+</p>
+
+[![RandomX](https://img.shields.io/badge/one_sec_mail-firm-orange)](https://github.com/josephyaduvanshi/one_sec_mail)
+[![Pub release](https://img.shields.io/pub/v/one_sec_mail.svg?style=flat-square)](https://pub.dev/packages/one_sec_mail)
+[![GitHub Release Date](https://img.shields.io/github/release-date/josephyaduvanshi/one_sec_mail.svg?style=flat-square)](https://github.com/josephyaduvanshi/one_sec_mail)
+[![GitHub issues](https://img.shields.io/github/issues/josephyaduvanshi/one_sec_mail.svg?style=flat-square)](https://github.com/josephyaduvanshi/one_sec_mail/issues)
+[![GitHub top language](https://img.shields.io/github/languages/top/josephyaduvanshi/one_sec_mail.svg?style=flat-square)](https://github.com/josephyaduvanshi/one_sec_mail)
+[![Likes](https://badges.bar/one_sec_mail/likes)](https://pub.dev/packages/one_sec_mail/score)
+[![Popularity](https://badges.bar/one_sec_mail/popularity)](https://pub.dev/packages/one_sec_mail/score)
+[![GitHub license](https://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](https://github.com/josephyaduvanshi/one_sec_mail/blob/main/LICENSE)
+[![support](https://img.shields.io/badge/platform-flutter%7Cflutter%20web%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/josephyaduvanshi/one_sec_mail)
+
+### Show some :heart: and star the repo :star: :star:.
+
+[![GitHub followers](https://img.shields.io/github/followers/josephyaduvanshi.svg?style=social&label=Follow)](https://github.com/josephyaduvanshi/)
+[![Twitter Follow](https://img.shields.io/twitter/follow/Josefyaduvanshi.svg?style=social)](https://twitter.com/Josefyaduvanshi)
+
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://opensource.org/licenses/Apache-2.0)
+
+---
+
 # OneSecMail Dart Package
 
 A Dart package that provides a convenient wrapper around the [1secmail.com](https://www.1secmail.com/api/) API. This package allows you to generate temporary email addresses, check mailboxes, read messages, and download attachments effortlessly.
